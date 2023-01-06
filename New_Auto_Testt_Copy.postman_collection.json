@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "938c3e16-86c2-4545-9184-421a846f560b",
+		"name": "New_Auto_Testt_Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21389690"
+	},
+	"item": [
+		{
+			"name": "NewCol",
+			"item": [
+				{
+					"name": "Get Club INFO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if response has the following id,name,full name\", function (){\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.clubs[0]).hasOwnProperty('id');\r",
+									"    pm.expect(jsonData.clubs[0]).hasOwnProperty('name');\r",
+									"    pm.expect(jsonData.clubs[0]).hasOwnProperty('fullName');\r",
+									"    \r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check if response has the following id,name,short name\", function (){\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.clubs[0].mainCompetition[0]).hasOwnProperty('id');\r",
+									"    pm.expect(jsonData.clubs[0].mainCompetition[0]).hasOwnProperty('name');\r",
+									"    pm.expect(jsonData.clubs[0].mainCompetition[0]).hasOwnProperty('shortName');\r",
+									"    \r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "{{transfer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "{{transfer_host}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{transfer_mkt}}{{get_info}}?ids={{$randomInt}}&domain=com",
+							"host": [
+								"{{transfer_mkt}}{{get_info}}"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "{{$randomInt}}"
+								},
+								{
+									"key": "domain",
+									"value": "com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NewCol2",
+			"item": [
+				{
+					"name": "Get_Random_joke",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let RESPONSEBody = JSON.parse(responseBody)\r",
+									"\r",
+									"\r",
+									"pm.test(\"Name KEY PRESENT\",function(){\r",
+									"    pm.expect(RESPONSEBody.hasOwnProperty('id')).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"pm.test(\"Type KEY PRESENT\",function(){\r",
+									"    pm.expect(RESPONSEBody.hasOwnProperty('type')).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"pm.test('Setup KEY PRESENT', function(){\r",
+									"    pm.expect(JSON.parse(responseBody).hasOwnProperty('setup')).to.eql(true);\r",
+									"})\r",
+									"\r",
+									"pm.test('Punchline KEY PRESENT', function(){\r",
+									"    pm.expect(JSON.parse(responseBody).hasOwnProperty('punchline')).to.eql(true);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://official-joke-api.appspot.com/random_joke",
+							"protocol": "https",
+							"host": [
+								"official-joke-api",
+								"appspot",
+								"com"
+							],
+							"path": [
+								"random_joke"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Coindesk",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Updated KEY PRESENT', function(){\r",
+									"\r",
+									"    let word = 'updated'\r",
+									"     pm.expect(pm.response.text()).to.include(word);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.coindesk.com/v1/bpi/currentprice.json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"coindesk",
+								"com"
+							],
+							"path": [
+								"v1",
+								"bpi",
+								"currentprice.json"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "variable_key",
+			"value": ""
+		},
+		{
+			"key": "randStr",
+			"value": ""
+		},
+		{
+			"key": "transfer_mkt",
+			"value": "https://transfermarket.p.rapidapi.com/clubs/"
+		},
+		{
+			"key": "transfer_token",
+			"value": "1442171274mshb9d70d435f1c185p1e37bbjsnab1940add52b"
+		},
+		{
+			"key": "transfer_host",
+			"value": "transfermarket.p.rapidapi.com"
+		},
+		{
+			"key": "get_info",
+			"value": "get-short-info"
+		}
+	]
+}
